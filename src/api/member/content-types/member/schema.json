@@ -1,0 +1,63 @@
+{
+  "kind": "collectionType",
+  "collectionName": "members",
+  "info": {
+    "singularName": "member",
+    "pluralName": "members",
+    "displayName": "Member"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullName": {
+      "type": "string"
+    },
+    "post": {
+      "type": "enumeration",
+      "enum": [
+        "President",
+        "Vice-President",
+        "Secretary",
+        "Joint Secretary",
+        "Treasurer",
+        "Joint Treasurer",
+        "Tech Lead",
+        "Ast. Tech Lead",
+        "Graphic Designer",
+        "Ast. Graphic Designer",
+        "Event Manger",
+        "HR Lead",
+        "Executive Member"
+      ]
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "email": {
+      "type": "string"
+    },
+    "facebookLink": {
+      "type": "string"
+    },
+    "linkedLink": {
+      "type": "string"
+    },
+    "githubLink": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "string",
+      "default": "Leadership, Event Management"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

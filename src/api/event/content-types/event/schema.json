@@ -50,6 +50,12 @@
     },
     "registrationFormUrl": {
       "type": "string"
+    },
+    "certificates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::certificate.certificate",
+      "mappedBy": "event"
     }
   }
 }
