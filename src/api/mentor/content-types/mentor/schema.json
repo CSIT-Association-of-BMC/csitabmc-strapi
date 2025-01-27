@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mentors",
+  "info": {
+    "singularName": "mentor",
+    "pluralName": "mentors",
+    "displayName": "Mentor"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullName": {
+      "type": "string"
+    },
+    "socialLink": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "events": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::event.event",
+      "inversedBy": "mentors"
+    }
+  }
+}

@@ -40,9 +40,16 @@
     "category": {
       "type": "enumeration",
       "enum": [
-        "cat1",
-        "cat2"
-      ]
+        "Workshop",
+        "Seminar",
+        "Hackathon",
+        "Training",
+        "Networking",
+        "Competition",
+        "Mentorship",
+        "Tech Talk"
+      ],
+      "default": "Workshop"
     },
     "tags": {
       "type": "string",
@@ -56,6 +63,12 @@
       "relation": "oneToMany",
       "target": "api::certificate.certificate",
       "mappedBy": "event"
+    },
+    "mentors": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::mentor.mentor",
+      "mappedBy": "events"
     }
   }
 }

@@ -426,7 +426,19 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    category: Schema.Attribute.Enumeration<['cat1', 'cat2']>;
+    category: Schema.Attribute.Enumeration<
+      [
+        'Workshop',
+        'Seminar',
+        'Hackathon',
+        'Training',
+        'Networking',
+        'Competition',
+        'Mentorship',
+        'Tech Talk',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'Workshop'>;
     certificates: Schema.Attribute.Relation<
       'oneToMany',
       'api::certificate.certificate'
@@ -441,6 +453,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
     location: Schema.Attribute.String;
+    mentors: Schema.Attribute.Relation<'manyToMany', 'api::mentor.mentor'>;
     publishedAt: Schema.Attribute.DateTime;
     registrationFormUrl: Schema.Attribute.String;
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
@@ -499,6 +512,40 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     tags: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Leadership, Event Management'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMentorMentor extends Struct.CollectionTypeSchema {
+  collectionName: 'mentors';
+  info: {
+    displayName: 'Mentor';
+    pluralName: 'mentors';
+    singularName: 'mentor';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    events: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
+    fullName: Schema.Attribute.String;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mentor.mentor'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    socialLink: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1051,6 +1098,7 @@ declare module '@strapi/strapi' {
       'api::certificate.certificate': ApiCertificateCertificate;
       'api::event.event': ApiEventEvent;
       'api::member.member': ApiMemberMember;
+      'api::mentor.mentor': ApiMentorMentor;
       'api::notice.notice': ApiNoticeNotice;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
