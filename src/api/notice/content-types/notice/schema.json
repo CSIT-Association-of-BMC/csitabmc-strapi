@@ -4,7 +4,8 @@
   "info": {
     "singularName": "notice",
     "pluralName": "notices",
-    "displayName": "Notice"
+    "displayName": "Notice",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,16 +15,14 @@
     "title": {
       "type": "string"
     },
-    "description": {
-      "type": "blocks"
-    },
     "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "category": {
       "type": "enumeration",
@@ -33,6 +32,9 @@
         "events"
       ],
       "default": "administrative"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }

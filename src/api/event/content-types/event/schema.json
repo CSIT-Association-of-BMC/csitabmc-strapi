@@ -15,9 +15,6 @@
     "title": {
       "type": "string"
     },
-    "description": {
-      "type": "blocks"
-    },
     "image": {
       "type": "media",
       "multiple": true,
@@ -69,6 +66,9 @@
       "relation": "manyToMany",
       "target": "api::mentor.mentor",
       "mappedBy": "events"
+    },
+    "description": {
+      "type": "richtext"
     }
   }
 }
