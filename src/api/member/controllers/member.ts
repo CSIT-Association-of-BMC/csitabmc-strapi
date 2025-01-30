@@ -1,7 +1,30 @@
-/**
- * member controller
- */
+import { factories } from "@strapi/strapi";
 
-import { factories } from '@strapi/strapi'
+export default factories.createCoreController(
+  "api::member.member",
+  ({ strapi }) => ({
+    async findOne(ctx) {
+      // Treat the URL parameter as memberId instead of default ID
+      const memberId = ctx.params.id;
 
-export default factories.createCoreController('api::member.member');
+      try {
+        const result = await strapi.entityService.findMany(
+          "api::member.member",
+          {
+            filters: { memberId },
+            limit: 1,
+          }
+        );
+
+        if (!result || result.length === 0) {
+          return ctx.notFound("Member not found");
+        }
+
+        // Maintain standard response format
+        return this.transformResponse(result[0]);
+      } catch (err) {
+        ctx.internalServerError("Something went wrong");
+      }
+    },
+  })
+);

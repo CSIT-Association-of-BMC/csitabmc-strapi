@@ -4,7 +4,8 @@
   "info": {
     "singularName": "member",
     "pluralName": "members",
-    "displayName": "Member"
+    "displayName": "Member",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -33,12 +34,10 @@
       ]
     },
     "image": {
-      "allowedTypes": [
-        "images",
-        "files"
-      ],
       "type": "media",
-      "multiple": false
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "files"]
     },
     "email": {
       "type": "string"
@@ -56,8 +55,18 @@
       "type": "string",
       "default": "Leadership, Event Management"
     },
+    "memberId": {
+      "type": "customField",
+      "unique": true,
+      "required": true,
+      "options": {
+        "disable-auto-fill": true,
+        "uuid-format": "^\\d{3}[A-Z]{1,3}[A-Z]{2,3}\\d{1,2}$"
+      },
+      "customField": "plugin::strapi-advanced-uuid.uuid"
+    },
     "description": {
-      "type": "text"
+      "type": "richtext"
     }
   }
 }

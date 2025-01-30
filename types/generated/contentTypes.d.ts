@@ -468,6 +468,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
 export interface ApiMemberMember extends Struct.CollectionTypeSchema {
   collectionName: 'members';
   info: {
+    description: '';
     displayName: 'Member';
     pluralName: 'members';
     singularName: 'member';
@@ -479,7 +480,7 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.RichText;
     email: Schema.Attribute.String;
     facebookLink: Schema.Attribute.String;
     fullName: Schema.Attribute.String;
@@ -492,6 +493,22 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
       'api::member.member'
     > &
       Schema.Attribute.Private;
+    memberId: Schema.Attribute.UID<
+      undefined,
+      {
+        'disable-auto-fill': true;
+        'uuid-format': '^\\d{3}[A-Z]{1,3}[A-Z]{2,3}\\d{1,2}$';
+      }
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.CustomField<
+        'plugin::strapi-advanced-uuid.uuid',
+        {
+          'disable-auto-fill': true;
+          'uuid-format': '^\\d{3}[A-Z]{1,3}[A-Z]{2,3}\\d{1,2}$';
+        }
+      >;
     post: Schema.Attribute.Enumeration<
       [
         'President',
