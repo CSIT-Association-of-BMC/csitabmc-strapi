@@ -4,7 +4,8 @@
   "info": {
     "singularName": "mentor",
     "pluralName": "mentors",
-    "displayName": "Mentor"
+    "displayName": "Mentor",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -18,14 +19,15 @@
       "type": "string"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "events": {
       "type": "relation",

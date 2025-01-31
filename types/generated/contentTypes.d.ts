@@ -545,6 +545,7 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
 export interface ApiMentorMentor extends Struct.CollectionTypeSchema {
   collectionName: 'mentors';
   info: {
+    description: '';
     displayName: 'Mentor';
     pluralName: 'mentors';
     singularName: 'mentor';
@@ -558,10 +559,7 @@ export interface ApiMentorMentor extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     events: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
     fullName: Schema.Attribute.String;
-    image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
