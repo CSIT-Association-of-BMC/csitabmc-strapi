@@ -447,25 +447,35 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
+    description: Schema.Attribute.RichText & Schema.Attribute.Required;
     endDate: Schema.Attribute.Date;
     endTime: Schema.Attribute.Time;
-    image: Schema.Attribute.Media<'images' | 'files', true>;
+    image: Schema.Attribute.Media<'images' | 'files', true> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
-    location: Schema.Attribute.String;
+    location: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Google Meet'>;
     mentors: Schema.Attribute.Relation<'manyToMany', 'api::mentor.mentor'>;
-    organizer: Schema.Attribute.String;
+    organizer: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'CSIT Association of BMC'>;
     publishedAt: Schema.Attribute.DateTime;
-    regestrationFee: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    regestrationFeeBMC: Schema.Attribute.Integer &
+    registrationFee: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    registrationFeeBMC: Schema.Attribute.Integer &
       Schema.Attribute.DefaultTo<0>;
     registrationFormUrl: Schema.Attribute.String;
+    registrationOpen: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>;
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
     startTime: Schema.Attribute.Time;
-    tags: Schema.Attribute.String & Schema.Attribute.DefaultTo<'tag1, tag2'>;
-    title: Schema.Attribute.String;
+    tags: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'csitabmc, workshop '>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -13,12 +13,13 @@
   "pluginOptions": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "image": {
       "type": "media",
       "multiple": true,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files"
@@ -32,7 +33,9 @@
       "type": "date"
     },
     "location": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "Google Meet"
     },
     "category": {
       "type": "enumeration",
@@ -50,7 +53,8 @@
     },
     "tags": {
       "type": "string",
-      "default": "tag1, tag2"
+      "default": "csitabmc, workshop ",
+      "required": true
     },
     "registrationFormUrl": {
       "type": "string"
@@ -68,7 +72,8 @@
       "mappedBy": "events"
     },
     "description": {
-      "type": "richtext"
+      "type": "richtext",
+      "required": true
     },
     "startTime": {
       "type": "time"
@@ -77,19 +82,26 @@
       "type": "time"
     },
     "organizer": {
-      "type": "string"
+      "type": "string",
+      "required": true,
+      "default": "CSIT Association of BMC"
     },
     "availableSeats": {
       "type": "integer",
       "default": 0
     },
-    "regestrationFeeBMC": {
+    "registrationFeeBMC": {
       "type": "integer",
       "default": 0
     },
-    "regestrationFee": {
+    "registrationFee": {
       "type": "integer",
       "default": 0
+    },
+    "registrationOpen": {
+      "type": "boolean",
+      "default": true,
+      "required": true
     }
   }
 }
