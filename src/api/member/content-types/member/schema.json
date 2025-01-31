@@ -37,19 +37,25 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files"]
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
     },
     "email": {
       "type": "string"
     },
     "facebookLink": {
-      "type": "string"
+      "type": "string",
+      "regex": "^(http://|https://)[-a-zA-Z0-9@:%.+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%+.~#?&//=]*)$"
     },
     "linkedLink": {
-      "type": "string"
+      "type": "string",
+      "regex": "^(http://|https://)[-a-zA-Z0-9@:%.+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%+.~#?&//=]*)$"
     },
     "githubLink": {
-      "type": "string"
+      "type": "string",
+      "regex": "^(http://|https://)[-a-zA-Z0-9@:%.+~#=]{1,256}.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%+.~#?&//=]*)$"
     },
     "tags": {
       "type": "string",
