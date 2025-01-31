@@ -4,8 +4,9 @@ export default factories.createCoreController(
   "api::member.member",
   ({ strapi }) => ({
     async findOne(ctx) {
-      // Treat the URL parameter as memberId instead of default ID
       const memberId = ctx.params.id;
+
+      const populate = ctx.query.populate || {};
 
       try {
         const result = await strapi.entityService.findMany(
@@ -13,6 +14,7 @@ export default factories.createCoreController(
           {
             filters: { memberId },
             limit: 1,
+            populate,
           }
         );
 
