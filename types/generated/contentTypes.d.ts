@@ -426,6 +426,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    availableSeats: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     category: Schema.Attribute.Enumeration<
       [
         'Workshop',
@@ -448,15 +449,21 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
     endDate: Schema.Attribute.Date;
+    endTime: Schema.Attribute.Time;
     image: Schema.Attribute.Media<'images' | 'files', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
     location: Schema.Attribute.String;
     mentors: Schema.Attribute.Relation<'manyToMany', 'api::mentor.mentor'>;
+    organizer: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    regestrationFee: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    regestrationFeeBMC: Schema.Attribute.Integer &
+      Schema.Attribute.DefaultTo<0>;
     registrationFormUrl: Schema.Attribute.String;
     startDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    startTime: Schema.Attribute.Time;
     tags: Schema.Attribute.String & Schema.Attribute.DefaultTo<'tag1, tag2'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;

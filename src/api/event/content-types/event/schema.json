@@ -69,6 +69,27 @@
     },
     "description": {
       "type": "richtext"
+    },
+    "startTime": {
+      "type": "time"
+    },
+    "endTime": {
+      "type": "time"
+    },
+    "organizer": {
+      "type": "string"
+    },
+    "availableSeats": {
+      "type": "integer",
+      "default": 0
+    },
+    "regestrationFeeBMC": {
+      "type": "integer",
+      "default": 0
+    },
+    "regestrationFee": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
