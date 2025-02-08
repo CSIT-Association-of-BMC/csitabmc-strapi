@@ -620,6 +620,37 @@ export interface ApiNoticeNotice extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTheEventBannerTheEventBanner
+  extends Struct.SingleTypeSchema {
+  collectionName: 'the_event_banners';
+  info: {
+    description: '';
+    displayName: 'the-event-banner';
+    pluralName: 'the-event-banners';
+    singularName: 'the-event-banner';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bannerLink: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    eventTitle: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::the-event-banner.the-event-banner'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1134,6 +1165,7 @@ declare module '@strapi/strapi' {
       'api::member.member': ApiMemberMember;
       'api::mentor.mentor': ApiMentorMentor;
       'api::notice.notice': ApiNoticeNotice;
+      'api::the-event-banner.the-event-banner': ApiTheEventBannerTheEventBanner;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

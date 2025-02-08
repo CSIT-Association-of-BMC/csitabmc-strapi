@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "the_event_banners",
+  "info": {
+    "singularName": "the-event-banner",
+    "pluralName": "the-event-banners",
+    "displayName": "the-event-banner",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "bannerLink": {
+      "type": "string"
+    },
+    "eventTitle": {
+      "type": "string"
+    }
+  }
+}

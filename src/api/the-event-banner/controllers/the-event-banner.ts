@@ -1,0 +1,7 @@
+/**
+ * the-event-banner controller
+ */
+
+import { factories } from '@strapi/strapi'
+
+export default factories.createCoreController('api::the-event-banner.the-event-banner');
