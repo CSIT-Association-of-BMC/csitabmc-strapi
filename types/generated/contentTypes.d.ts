@@ -531,14 +531,15 @@ export interface ApiMemberMember extends Struct.CollectionTypeSchema {
         'President',
         'Vice-President',
         'Secretary',
-        'Joint Secretary',
         'Treasurer',
-        'Joint Treasurer',
         'Tech Lead',
-        'Ast. Tech Lead',
+        'Event Lead',
         'Graphic Designer',
+        'Joint Secretary',
+        'Joint Treasurer',
+        'Ast. Tech Lead',
+        'Ast. Event Lead',
         'Ast. Graphic Designer',
-        'Event Manger',
         'HR Lead',
         'Executive Member',
       ]
@@ -614,6 +615,39 @@ export interface ApiNoticeNotice extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPushDevicePushDevice extends Struct.CollectionTypeSchema {
+  collectionName: 'push_devices';
+  info: {
+    displayName: 'Push Device';
+    pluralName: 'push-devices';
+    singularName: 'push-device';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    enabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::push-device.push-device'
+    > &
+      Schema.Attribute.Private;
+    platform: Schema.Attribute.Enumeration<['android', 'ios']> &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    token: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1165,6 +1199,7 @@ declare module '@strapi/strapi' {
       'api::member.member': ApiMemberMember;
       'api::mentor.mentor': ApiMentorMentor;
       'api::notice.notice': ApiNoticeNotice;
+      'api::push-device.push-device': ApiPushDevicePushDevice;
       'api::the-event-banner.the-event-banner': ApiTheEventBannerTheEventBanner;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

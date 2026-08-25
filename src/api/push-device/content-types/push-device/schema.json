@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "push_devices",
+  "info": {
+    "singularName": "push-device",
+    "pluralName": "push-devices",
+    "displayName": "Push Device"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "token": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "platform": {
+      "type": "enumeration",
+      "enum": [
+        "android",
+        "ios"
+      ],
+      "required": true
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
