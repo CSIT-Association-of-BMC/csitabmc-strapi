@@ -52,11 +52,15 @@ export default {
       try {
         // Fetch the newly published version
         const publishedNotice = await strapi
-          .documents('api::notice.notice')
-          .findOne({
-            documentId,
-            status: 'published',
-          });
+  .documents('api::notice.notice')
+  .findOne({
+    documentId,
+    status: 'published',
+
+    populate: {
+      image: true,
+    },
+  });
 
         if (!publishedNotice) {
           strapi.log.warn(
