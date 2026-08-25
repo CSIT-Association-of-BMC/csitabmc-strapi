@@ -629,7 +629,7 @@ export interface ApiPushDevicePushDevice extends Struct.CollectionTypeSchema {
     singularName: 'push-device';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
