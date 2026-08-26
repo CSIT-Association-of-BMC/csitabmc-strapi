@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "temporary_notifications",
+  "info": {
+    "singularName": "temporary-notification",
+    "pluralName": "temporary-notifications",
+    "displayName": "Temporary Notification"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

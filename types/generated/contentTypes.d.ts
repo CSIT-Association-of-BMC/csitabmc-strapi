@@ -654,6 +654,37 @@ export interface ApiPushDevicePushDevice extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTemporaryNotificationTemporaryNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'temporary_notifications';
+  info: {
+    displayName: 'Temporary Notification';
+    pluralName: 'temporary-notifications';
+    singularName: 'temporary-notification';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::temporary-notification.temporary-notification'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTheEventBannerTheEventBanner
   extends Struct.SingleTypeSchema {
   collectionName: 'the_event_banners';
@@ -1200,6 +1231,7 @@ declare module '@strapi/strapi' {
       'api::mentor.mentor': ApiMentorMentor;
       'api::notice.notice': ApiNoticeNotice;
       'api::push-device.push-device': ApiPushDevicePushDevice;
+      'api::temporary-notification.temporary-notification': ApiTemporaryNotificationTemporaryNotification;
       'api::the-event-banner.the-event-banner': ApiTheEventBannerTheEventBanner;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

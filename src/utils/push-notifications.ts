@@ -49,13 +49,6 @@ function getNotificationDescription(description: unknown): string {
     : clean;
 }
 
-
-/**
- * Get the first IMAGE from the Notice media field.
- *
- * Notice.image is configured as multiple media and
- * may also contain files, so only use actual images.
- */
 function getNoticeImageUrl(notice: any): string | undefined {
   if (!notice?.image) {
     return undefined;
@@ -197,5 +190,171 @@ export async function sendNoticePush(
       '[Push] Failed to send notice notification:',
       error
     );
+  }
+}
+
+type CustomPushPayload = {
+  title: unknown;
+  description: unknown;
+  imageUrl?: string;
+};
+
+function getCustomNotificationTitle(title: unknown): string {
+  if (typeof title !== 'string') {
+    return 'Notification';
+  }
+
+  const clean = title
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!clean) {
+    return 'Notification';
+  }
+
+  return clean.length > 100
+    ? `${clean.substring(0, 97)}...`
+    : clean;
+}
+
+function getCustomNotificationDescription(
+  description: unknown
+): string {
+  if (typeof description !== 'string') {
+    return 'Tap to view more.';
+  }
+
+  const clean = description
+    .replace(/<[^>]*>/g, '')
+    .replace(/[#*_>`~[\]()]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!clean) {
+    return 'Tap to view more.';
+  }
+
+  return clean.length > 500
+    ? `${clean.substring(0, 497)}...`
+    : clean;
+}
+
+
+export async function sendCustomPush(
+  strapi: any,
+  payload: CustomPushPayload
+) {
+  try {
+    const devices = await strapi
+      .documents('api::push-device.push-device')
+      .findMany({
+        filters: {
+          enabled: true,
+        },
+      });
+
+    const tokens = devices
+      .map((device: any) => device.token)
+      .filter(
+        (token: unknown): token is string =>
+          typeof token === 'string' &&
+          token.length > 0
+      );
+
+    if (tokens.length === 0) {
+      strapi.log.info(
+        '[Push] No enabled devices registered.'
+      );
+
+      return;
+    }
+
+    const title =
+      getCustomNotificationTitle(payload.title);
+
+    const body =
+      getCustomNotificationDescription(
+        payload.description
+      );
+
+    const imageUrl =
+      typeof payload.imageUrl === 'string' &&
+      payload.imageUrl.trim()
+        ? payload.imageUrl.trim()
+        : undefined;
+
+    const messages = tokens.map((token) => ({
+      to: token,
+
+      sound: 'default',
+
+      priority: 'high',
+
+      // Same Android notification channel
+      // already used by your Notice notifications
+      channelId: 'notices',
+
+      title,
+
+      body,
+
+      ...(imageUrl
+        ? {
+            richContent: {
+              image: imageUrl,
+            },
+          }
+        : {}),
+
+      data: {
+        type: 'temporary-notification',
+        imageUrl: imageUrl ?? null,
+      },
+    }));
+
+    // Expo accepts max 100 messages per request
+    for (let i = 0; i < messages.length; i += 100) {
+      const chunk = messages.slice(i, i + 100);
+
+      const response = await fetch(
+        'https://exp.host/--/api/v2/push/send',
+        {
+          method: 'POST',
+
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+
+          body: JSON.stringify(chunk),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          `Expo Push failed: ${
+            response.status
+          } ${JSON.stringify(result)}`
+        );
+      }
+
+      strapi.log.info(
+        `[Push] Temporary notification "${title}" sent to ${chunk.length} device(s)`
+      );
+
+      strapi.log.debug(
+        `[Push] Expo response: ${JSON.stringify(result)}`
+      );
+    }
+  } catch (error) {
+    strapi.log.error(
+      '[Push] Failed to send temporary notification:',
+      error
+    );
+
+    throw error;
   }
 }
