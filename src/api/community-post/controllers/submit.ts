@@ -1,21 +1,22 @@
 import crypto from 'crypto';
 
-function generateAnonymousUsername(pushToken: string) {
+function generateAnonymousUsername(identityKey: string) {
   const hash = crypto
     .createHash('sha256')
-    .update(pushToken)
+    .update(identityKey)
     .digest('hex')
     .substring(0, 8)
     .toUpperCase();
 
-  return `CSITABMC_${hash}`;
+  return `CSITABMC_${hash}_GM`;
 }
 
 export default {
   async submit(ctx: any) {
     try {
-      const { message, pushToken } = ctx.request.body ?? {};
+      const { message, identityKey } = ctx.request.body ?? {};
 
+      // Validate message
       if (
         typeof message !== 'string' ||
         !message.trim()
@@ -23,12 +24,20 @@ export default {
         return ctx.badRequest('Message is required.');
       }
 
+      // Validate anonymous installation identity
       if (
-        typeof pushToken !== 'string' ||
-        !pushToken.trim()
+        typeof identityKey !== 'string' ||
+        !identityKey.trim()
       ) {
         return ctx.badRequest(
-          'Push token is required.'
+          'Identity key is required.'
+        );
+      }
+
+      // Basic size protection
+      if (identityKey.length > 500) {
+        return ctx.badRequest(
+          'Invalid identity key.'
         );
       }
 
@@ -38,10 +47,17 @@ export default {
         .slice(0, 1000);
 
       const username =
-        generateAnonymousUsername(pushToken.trim());
+        generateAnonymousUsername(
+          identityKey.trim()
+        );
 
+      // Always force anonymous submissions to:
+      // source = user
+      // status = draft
       const post = await strapi
-        .documents('api::community-post.community-post')
+        .documents(
+          'api::community-post.community-post'
+        )
         .create({
           data: {
             username,
