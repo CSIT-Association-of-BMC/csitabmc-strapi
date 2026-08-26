@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "community_posts",
+  "info": {
+    "singularName": "community-post",
+    "pluralName": "community-posts",
+    "displayName": "Community-Post",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "source": {
+      "type": "enumeration",
+      "enum": [
+        "admin",
+        "user"
+      ],
+      "required": true,
+      "default": "user"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "username": {
+      "type": "string",
+      "required": true
+       },
+    "message": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}
