@@ -197,7 +197,22 @@ type CustomPushPayload = {
   title: unknown;
   description: unknown;
   imageUrl?: string;
+  link?: unknown;
 };
+
+/**
+ * Optional external link (e.g. a Facebook post) the app opens on tap.
+ * Only full http(s) URLs are forwarded.
+ */
+function getCustomNotificationLink(link: unknown): string | undefined {
+  if (typeof link !== 'string') {
+    return undefined;
+  }
+
+  const clean = link.trim();
+
+  return /^https?:\/\/\S+$/i.test(clean) ? clean : undefined;
+}
 
 function getCustomNotificationTitle(title: unknown): string {
   if (typeof title !== 'string') {
@@ -284,6 +299,8 @@ export async function sendCustomPush(
         ? payload.imageUrl.trim()
         : undefined;
 
+    const link = getCustomNotificationLink(payload.link);
+
     const messages = tokens.map((token) => ({
       to: token,
 
@@ -310,6 +327,7 @@ export async function sendCustomPush(
       data: {
         type: 'temporary-notification',
         imageUrl: imageUrl ?? null,
+        ...(link ? { link } : {}),
       },
     }));
 

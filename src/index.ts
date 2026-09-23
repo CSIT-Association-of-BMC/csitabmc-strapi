@@ -191,6 +191,8 @@ export default {
               notification.description,
 
             imageUrl,
+
+            link: notification.link,
           });
         } catch (error) {
           strapi.log.error(

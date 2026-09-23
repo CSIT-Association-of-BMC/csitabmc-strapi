@@ -8,5 +8,13 @@ export default {
         auth: false,
       },
     },
+    {
+      method: 'POST',
+      path: '/push-devices/unregister',
+      handler: 'register.unregister',
+      config: {
+        auth: false,
+      },
+    },
   ],
 };

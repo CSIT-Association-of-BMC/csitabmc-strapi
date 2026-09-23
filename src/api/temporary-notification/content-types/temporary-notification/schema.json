@@ -25,6 +25,10 @@
       ],
       "type": "media",
       "multiple": false
+    },
+    "link": {
+      "type": "string",
+      "regex": "^https?://\\S+$"
     }
   }
 }
